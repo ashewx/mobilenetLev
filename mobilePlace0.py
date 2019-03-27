@@ -31,7 +31,7 @@ from tensorflow.python.ops import variable_scope
 from tensorflow.python.platform import test
 import tensorflow as tf
 
-cluster = tf.train.ClusterSpec({"local": ["localhost:2222", "localhost:2223"]})
+cluster = tf.train.ClusterSpec({"local": ["172.23.10.3:2222", "172.23.10.4:2223"]})
 server1 = tf.train.Server(cluster, job_name="local", task_index=0)
 
 class GraphPlacerTest():
@@ -86,7 +86,7 @@ class GraphPlacerTest():
     # Spend 15 seconds trying to optimize the placement of the model. This
     # should give us enough time to exercise the code, but not enough to find
     # a good placement, so we'll just check for legality.
-    placed_mg = graph_placer.PlaceGraph(mg, allotted_time=600, cluster=gcluster, verbose=True)
+    placed_mg = graph_placer.PlaceGraph(mg, allotted_time=108000, cluster=gcluster, verbose=True)
     placed_g = placed_mg.graph_def;
     meta_graph.export_scoped_meta_graph(filename="./g/g.meta", graph_def=placed_g)
     # node in placed_mg.graph_def.node:
